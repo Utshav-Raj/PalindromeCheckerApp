@@ -1,43 +1,40 @@
 import java.util.Scanner;
 
-public class PalindromeCheckerApp {
+public class UseCase10PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("===== Recursive Palindrome Checker =====");
+        System.out.println("===== Case-Insensitive & Space-Ignored Palindrome Checker =====");
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Normalize input
+        // Step 1: Normalize string
+        // Remove all spaces using regular expression and convert to lowercase
         String processedInput = input.replaceAll("\\s+", "").toLowerCase();
 
-        boolean isPalindrome = checkPalindrome(processedInput, 0, processedInput.length() - 1);
+        // Step 2: Check palindrome using two-pointer technique
+        boolean isPalindrome = true;
+        int start = 0;
+        int end = processedInput.length() - 1;
 
+        while (start < end) {
+            if (processedInput.charAt(start) != processedInput.charAt(end)) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        // Step 3: Display result
         if (isPalindrome) {
-            System.out.println("Result: The given string is a Palindrome.");
+            System.out.println("Result: The given string is a Palindrome (ignoring spaces and case).");
         } else {
             System.out.println("Result: The given string is NOT a Palindrome.");
         }
 
         scanner.close();
-    }
-
-    // Recursive method
-    public static boolean checkPalindrome(String str, int start, int end) {
-
-        // Base condition: if pointers cross or meet
-        if (start >= end) {
-            return true;
-        }
-
-        // If mismatch found
-        if (str.charAt(start) != str.charAt(end)) {
-            return false;
-        }
-
-        // Recursive call
-        return checkPalindrome(str, start + 1, end - 1);
     }
 }
